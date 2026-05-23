@@ -21,6 +21,7 @@ public class SendOptionsCtrl implements Initializable {
 	@FXML public ComboBox<AddressData> changeAddress;
 
 	public record AddressData(int index, String name, Address value) {
+		@Override
 		public String toString() {
 			return name.isBlank() ? "(#" + index + ")" : name;
 		}
@@ -34,10 +35,10 @@ public class SendOptionsCtrl implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		addresses.forEach(data -> {
-			ToggleButton button = new ToggleButton(data.name());
-			button.setSelected(selected.contains(data.index()));
-			button.setUserData(data.index());
+		addresses.forEach(addressData -> {
+			ToggleButton button = new ToggleButton(addressData.toString());
+			button.setSelected(selected.contains(addressData.index()));
+			button.setUserData(addressData.index());
 			candidates.getChildren().add(button);
 		});
 		changeAddress.getItems().addAll(addresses);
