@@ -28,10 +28,6 @@ application {
 repositories {
 	mavenCentral()
 	maven {
-		url = 'https://oss.sonatype.org/service/local/repositories/snapshots/content/'
-		content { includeGroup 'org.scorexfoundation' }
-	}
-	maven {
 		url = 'https://maven.satergo.com/snapshots'
 		mavenContent {
 			snapshotsOnly()
@@ -84,6 +80,7 @@ dependencies {
 	implementation 'org.fxmisc.flowless:flowless:0.7.4'
 
 	implementation 'org.ergoplatform:ergo-appkit_2.12:5.0.4'
+	implementation 'org.scorexfoundation:scrypto_2.12:3.0.0' // override snapshot version used by appkit
 	implementation 'com.typesafe:config:1.4.3'
 	implementation 'org.slf4j:slf4j-simple:2.0.13'
 	implementation 'com.grack:nanojson:1.9' // used for numerous HTTP APIs and ProgramData saving
@@ -132,7 +129,11 @@ shadowJar {
 
 satergoRuntime {
 
-	extraModules = ["java.naming", "jdk.charsets", "jdk.zipfs"]
+	extraModules = [
+			"java.naming", // for node
+			"jdk.unsupported", // for node & Gson
+			"jdk.charsets", "jdk.zipfs"
+	]
 	javaFxModules.forEach { extraModules.add("javafx." + it) }
 	excludeModules = []
 	extraModuleJars = configurations.javaFxDeps.files
