@@ -16,8 +16,8 @@ java {
 }
 
 group = 'com.satergo'
-version = '1.9.3'
-def versionCode = 14
+version = '1.9.4'
+def versionCode = 15
 
 application {
 	mainClass = "com.satergo.Launcher"
